@@ -1,0 +1,6 @@
+---
+# defaults file for lb
+
+haproxy_config_path: /etc/haproxy/haproxy.cfg
+check_interval: 1
+

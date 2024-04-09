@@ -1,0 +1,21 @@
+---
+# tasks file for lb
+
+- name: Install HAproxy
+  yum:
+    name: haproxy
+    state: present
+  
+- name: Start and enable haproxy
+  service:
+    name: haproxy
+    state: started
+    enabled: true
+
+- name: Copy HAproxy config template
+  template:
+    src: haproxy.cfg.j2
+    dest: "{{ haproxy_config_path }}"
+    mode: '0644'
+    owner: root
+  notify: restart haproxy

@@ -8,4 +8,17 @@
 
 #- name: Update hostnames
 #  lineinfile:
+
+- name: Start Firewalld service
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: Enable http port on firewall
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    state: enabled
+    immediate: true
   

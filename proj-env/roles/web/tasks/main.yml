@@ -1,9 +1,9 @@
 ---
 # tasks file for web
 
-- name: Install apache
+- name: Install apache and php
   yum:
-    name: httpd
+    name: httpd, php
     state: present
 
 - name: Start and enable apache
@@ -11,3 +11,39 @@
     name: httpd
     state: started
     enabled: true
+- name: Create document root dir
+  file:
+    path: "{{ doc_root }}"
+    state: directory
+    mode: '0755'
+
+
+- name: Copy vhost config file
+  block:
+  - name: copy template
+    template:
+      src: ansible_httpd.conf.j2
+      dest: "{{ vhost_config_file }}"
+    notify: Restart httpd
+#  - name: Change httpd conf file to allow vhost
+#    lineinfile:
+#      path: "{{ httpd_config_file }}"
+#      regexp: 
+  - name: Check validity
+    command: httpd -t
+
+  rescue:
+  - name: remove vhost_conf 
+    file:  
+      path: "{{ vhost_config_file }}"
+      state: absent
+
+  - name: print error msg
+    debug:
+      msg: "The vhost conf file is invalid! Please rectify and try again!"
+
+- name: Copy index file
+  copy:
+    src: "{{ index_file }}"
+    dest: "{{ doc_root }}"
+  notify: Restart httpd

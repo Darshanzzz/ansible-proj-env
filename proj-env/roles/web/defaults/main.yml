@@ -1,2 +1,10 @@
 ---
 # defaults file for web
+port_num: 80
+doc_root: /var/www/proj-env
+server_name: test.example.com
+error_log_path: /var/log/httpd/error_log
+vhost_config_file: /etc/httpd/conf.d/proj-env.conf
+index_file: index.php
+check_interval: 1
+
