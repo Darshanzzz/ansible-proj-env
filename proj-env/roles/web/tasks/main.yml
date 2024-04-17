@@ -3,7 +3,7 @@
 
 - name: Install apache and php
   yum:
-    name: httpd, php
+    name: httpd, php, php-mysql
     state: present
 
 - name: Start and enable apache
@@ -47,3 +47,13 @@
     src: "{{ index_file }}"
     dest: "{{ doc_root }}"
   notify: Restart httpd
+
+- name: Copy db.php file
+  template:
+    src: db.php.j2
+    dest: "{{ doc_root }}/db.php"
+  notify: Restart httpd
+
+- name: disable selinux
+  selinux:
+    state: disabled

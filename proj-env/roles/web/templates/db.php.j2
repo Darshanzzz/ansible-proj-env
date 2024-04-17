@@ -1,0 +1,6 @@
+<?php
+
+$connection = new PDO('mysql:host=db1;dbname={{ db_name }}', '{{ db_user }}', '{{ db_user_pass }}');
+$statement  = $connection->query('SELECT message FROM {{ db_name }}');
+
+echo $statement->fetchColumn(); 

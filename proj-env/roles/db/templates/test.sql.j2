@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS {{ db_name }} (
+  message varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO {{ db_name }} (message) VALUES('Hello World!');
+

@@ -3,13 +3,28 @@
   become: true
   roles:
    - common
+  tags:
+   - common
 
 - hosts: web
   become: true
   roles:
+    - web
+  tags:
     - web
 
 - hosts: lb
   become: true
   roles:
     - lb
+  tags:
+    - lb
+ 
+- hosts: db
+  become: true
+  roles:
+    - db
+  tags: 
+    - db
+
+

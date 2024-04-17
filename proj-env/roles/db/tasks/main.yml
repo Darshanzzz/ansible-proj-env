@@ -1,0 +1,57 @@
+---
+# tasks file for db
+
+- name: Install db ipackages
+  yum:  
+    name: 
+      - mariadb-server
+      - MySQL-python
+    state: present
+
+- name: Start and enable service
+  service:
+    name: mariadb
+    state: started
+    enabled: true
+
+- name: Create new database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: present
+    collation: utf8_general_ci
+  notify: restart mariadb
+
+- name: Create db user
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_user_pass }}"
+    priv: "{{ db_user_priv }}"
+    host: "{{ db_allowed_hosts }}"
+    state: present
+  notify: restart mariadb
+- name: create local user 
+  mysql_user: 
+    name: "{{ db_user }}"
+    password: "{{ db_user_pass }}"
+    priv: "{{ db_user_priv }}"
+    host: localhost
+    state: present
+- name: copy sample data
+  template:
+    src: test.sql.j2
+    dest: /tmp/test.sql
+  notify: restart mariadb
+
+- name: insert sample data
+  shell: cat /tmp/test.sql | mysql -u "{{ db_user }}" -ppassword "{{ db_name }}"
+  notify: restart mariadb
+
+- name: Enable http port on firewall
+  firewalld:
+    port: 3306/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+
+
+

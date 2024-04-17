@@ -1,0 +1,9 @@
+---
+# defaults file for db
+
+db_name: test
+db_user: user
+db_user_pass: password
+db_user_priv: '*.*:ALL'
+db_allowed_hosts: '%'
+
