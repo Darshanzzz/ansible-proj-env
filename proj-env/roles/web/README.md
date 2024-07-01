@@ -1,7 +1,14 @@
-Role Name
+Web servers
 =========
 
-A brief description of the role goes here.
+Function:
+
+- Install and enable apache, php
+- Create and copy vhost config file (using template) to node
+- Error checking for validity of config file
+- Copy index file
+- Copy db.php file
+- disable selinux
 
 Requirements
 ------------
