@@ -3,7 +3,7 @@ Common services
 
 Function: 
 - Adds all the hostname to ip address resolution added to the /etc/hosts file
-  Starts firewalld service on all nodes
+- Starts firewalld service on all nodes
 - Enables http port on firewalld
 
 Requirements
